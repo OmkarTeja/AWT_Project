@@ -59,11 +59,10 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="post-heading">
-              <h1>Man must explore, and this is exploration at its greatest</h1>
-              <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+              <h1 id="subject"></h1>
               <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2017</span>
+                <a href="#" id="postedBy"></a>
+			  </span>
             </div>
           </div>
         </div>
@@ -75,7 +74,26 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-            
+            <div id="postDescription">
+				
+			</div><br/><hr/>
+			<div id="answersDiv" style="margin-left:10%">
+				<h3>Answers</h3><br/>
+				
+			</div><br/><hr/>
+			<form>
+			<div class="control-group" style="margin-left:10%">
+			  <div class="form-group col-xs-12 floating-label-form-group controls">
+				<label>Answer</label>
+				<textarea rows="3" cols="100" class="form-control" placeholder="Write an Answer" id="answerTextarea" required data-validation-required-message="Please elaborate your issue"></textarea>
+			  </div>
+			</div>
+			<br>
+			<div class="form-group" style="margin-left:10%">
+			  <button type="submit" class="btn btn-primary" id="postAnswer">Post Answer</button>
+			  <p class="help-block text-danger" id="answerWarning"></p>
+			</div>
+			</form>
           </div>
         </div>
       </div>
@@ -126,6 +144,81 @@
 
     <!-- Custom scripts for this template -->
     <script src="../js/clean-blog.min.js"></script>
+	
+	<script>
+		function getUserData(id){
+			$.getJSON('../APIs/getUserDetails.php?id='+id,function(userDataInPostPage){
+				name=userDataInPostPage.name;
+			});
+			return name;
+		}
+				
+		function checkLoginStatus(){
+			var user;
+			$.getJSON('../APIs/getSession.php',function(userData){
+				if(userData.user=='null'){
+					$("#postAnswer").prop('disabled', true);
+					$("#answerWarning").append("Please Login to Answer");
+					user=null;
+				}
+				else{
+					user=userData.user;
+				}
+			});
+			return user;
+		}
+		
+		
+		$(document).ready(function(){
+			var id;
+			var user;
+			
+			user=checkLoginStatus();
+			
+			$.getJSON('../APIs/getPostSession.php',function(data){
+				id=data.postId;
+				
+				$.getJSON('../APIs/getPosts.php?post_id='+id,function(postData){
+					$("#subject").append(postData.posts[0].subject);
+					$("#postedBy").append(getUserData(postData.posts[0].user_id)+"</a></p></div><hr/>");				
+					$("#postDescription").append(postData.posts[0].description);				
+				});
+				
+				$.getJSON('../APIs/getAnswers.php?post_id='+id,function(answersData){
+					var str="";
+					for(i=0;i<answersData.answers.length;i++){
+						str+="<div><h5>";
+						str+=getUserData(answersData.answers[i].user_id)+"'s answer:</h5>";
+						str+=answersData.answers[i].description+"</div><br/><hr/>";
+					}
+					$("#answersDiv").append(str);
+				});
+			});
+			
+			$('#postAnswer').click(function(){
+				var str="";
+				var description=$("#answerTextarea").val();
+				str+="<div><h5>";
+				str+=getUserData(user)+"'s answer:</h5>";
+				str+=description+"</div><br/><hr/>";
+				
+				$.ajax({
+					url: "../APIs/insertAnswer.php",
+					type: "POST",
+					data: {
+						userId: parseInt(user),
+						postId: parseInt(id),
+						description: String(description)
+					},
+					success : function(){
+						$("#answersDiv").append(str);
+					}
+				});
+				$("#answerTextarea").val("");
+				return false;
+			});
+		});
+	</script>
 
   </body>
 

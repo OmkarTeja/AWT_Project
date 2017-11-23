@@ -94,6 +94,7 @@
             <div id="success"></div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary" id="postButton">Post</button>
+			  <p class="help-block text-danger" id="postSubmitWarning"></p>
             </div>
           </form>
 		</div>
@@ -143,12 +144,49 @@
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Contact Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
 
     <!-- Custom scripts for this template -->
-    <script src="js/clean-blog.min.js"></script>
+    <script src="../js/clean-blog.min.js"></script>
 
+	
+	<script>
+		$(document).ready(function(){
+			var user;
+			
+			$.getJSON('../APIs/getSession.php',function(userData){
+				if(userData.user=='null'){
+					$("#postButton").prop('disabled', true);
+					$("#postSubmitWarning").append("Please Login to Answer");
+					user=null;
+				}
+				else{
+					user=userData.user;
+				}
+			});
+			
+			$('#postButton').click(function(){
+				var description=$("#issue").val();
+				var subject=$("#subject").val();
+				$.ajax({
+					url: "../APIs/insertPost.php",
+					type: "POST",
+					data: {
+						userId: parseInt(user),
+						subject: String(subject),
+						description: String(description)
+					},
+					success: function(data){
+						$("#postSubmitWarning").append("Post Successful");
+					}
+				});
+				$("#issue").val("");
+				$("#subject").val("");
+				return false;
+			});
+		});
+	</script>
   </body>
 
 </html>

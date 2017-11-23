@@ -11,7 +11,6 @@
 	
 	$result=mysqli_query($conn,$query_string);
 	
-	$posts_array[]=null;
 	while($row=mysqli_fetch_array($result)){
 		$posts_array[]=array(
 			"id" => $row["id"],
@@ -21,6 +20,6 @@
 			"user_id" => $row["user_id"]
 		);
 	}
-	
-	echo json_encode($posts_array);
+	$posts=array("posts" => $posts_array);
+	echo json_encode($posts);
 ?>

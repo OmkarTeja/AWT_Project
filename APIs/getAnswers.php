@@ -4,7 +4,6 @@
 	$post_id=$_GET["post_id"];
 	$result=mysqli_query($conn,"select * from answers where post_id=$post_id order by upvotes desc");
 	
-	$answers_array[]=null;
 	while($row=mysqli_fetch_array($result)){
 		$answers_array[]=array(
 			"id" => $row["id"],
@@ -17,5 +16,7 @@
 		);
 	}
 	
-	echo json_encode($answers_array);
+	$return=array("answers" => $answers_array);
+	
+	echo json_encode($return);
 ?>

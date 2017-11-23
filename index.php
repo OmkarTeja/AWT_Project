@@ -78,21 +78,8 @@
 		  </button>
 		  </span>
 		</div>
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="post-preview">
-            <a href="HTML/post.php">
-              <h2 class="post-title">
-                Man must explore, and this is exploration at its greatest
-              </h2>
-              <h3 class="post-subtitle">
-                Problems look mighty small from 150 miles up
-              </h3>
-            </a>
-            <p class="post-meta">Posted by
-              <a href="#">Start Bootstrap</a>
-              on September 24, 2017</p>
-          </div>
-          <hr>
+        <div class="col-lg-8 col-md-10 mx-auto" id="main_content">
+          
         </div>
       </div>
     </div>
@@ -142,6 +129,31 @@
     <!-- Custom scripts for this template -->
     <script src="js/clean-blog.min.js"></script>
 
+	<script>
+		function getUserData(id){
+			$.getJSON('APIs/getUserDetails.php?id='+id,function(userData){
+				name=userData.name+"</a></p></div><hr/>";
+			});
+			return name;
+		}
+		$.getJSON('APIs/getPosts.php',function(data){
+			var str="";
+			for(i=0;i<data.posts.length;i++){
+				str+="<div class='post-preview'><a href='HTML/post.php' id='"+data.posts[i].id+"' class='postLinkClass'><h2 class='post-title'>";
+				str+=data.posts[i].subject+"</h2></a><p class='post-meta'>Posted by <a href='#'>";
+				str+=getUserData(data.posts[i].user_id);
+			}
+			$("#main_content").append(str);
+		});
+		$(document).ready(function(){
+			$('a.postLinkClass').click(function(){
+				var id=$(this).attr("id");
+				$.getJSON('APIs/setPostSession.php?id='+id,function(data){
+					//Nothing
+				});
+			});
+		});
+	</script>
   </body>
 
 </html>

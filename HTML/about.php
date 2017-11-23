@@ -9,6 +9,9 @@
     <meta name="author" content="">
 
     <title>Student Issues Resolving Blog</title>
+	
+	<!-- Linked in profile-->
+	<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
 
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +62,7 @@
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <div class="page-heading">
-              <h1>About Us</h1>
+              <h1>About</h1>
               <span class="subheading"></span>
             </div>
           </div>
@@ -69,11 +72,35 @@
 
     <!-- Main Content -->
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-			Link profiles
+		<h2>About Website</h2><br/>
+		<div>
+		Are you a BMSCE Student? Then you shall definitely have problems.
+		Issues related to students, faculty, administration, problems with the infrastructure of college, inadequate/improper hostel facilities and the list goes on.
+		You're at right place to find someone who can give solutions to your problem. Go ahead and Sign in and Stay connected.
+		</div><br/><hr/>
+		<h2>About us</h2><br/>
+		<div class="row">
+		  <div class="col-sm-3" style="margin-left=10%">
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
+				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Omkar Teja</a>
+			</div>
+		  </div>
+		  <div class="col-sm-3" style="margin-left=10%">
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
+				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Sparsha B M</a>
+			</div>
+		  </div>
+		  <div class="col-sm-3" style="margin-left=10%">
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
+				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Nithya A</a>
+			</div>
+		  </div>
+		  <div class="col-sm-3" style="margin-left=10%">
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
+				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Sudipto Sinha</a>
+			</div>
+		  </div>
 		</div>
-      </div>
     </div>
 
     <hr>
