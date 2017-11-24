@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login/Sign up</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -183,6 +186,14 @@
 				});
 				$("#issue").val("");
 				$("#subject").val("");
+				return false;
+			});
+			
+			$("#logout").click(function(){
+				$.get("../APIs/deleteSessions.php",function(data){
+					if(data=="success")
+						window.location.href = "../index.php";
+				});
 				return false;
 			});
 		});

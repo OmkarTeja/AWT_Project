@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login/Sign up</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -131,8 +134,6 @@
               <button type="submit" class="btn btn-primary" id="sendMessageButton">Sign_up</button>
             </div>
          </form>
-	
-		 
         </div>
       
     </div>
@@ -187,6 +188,18 @@
     <!-- Custom scripts for this template -->
     <script src="js/clean-blog.min.js"></script>
 
+	<script>
+		$(document).ready(function(){
+			$("#logout").click(function(){
+				$.get("../APIs/deleteSessions.php",function(data){
+					if(data=="success")
+						window.location.href = "../index.php";
+				});
+				return false;
+			});
+		});
+	</script>
+	
   </body>
 
 </html>

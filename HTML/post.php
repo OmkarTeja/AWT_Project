@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login/Sign up</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -146,11 +149,10 @@
     <script src="../js/clean-blog.min.js"></script>
 	
 	<script>
-		function getUserData(id){
+		function getUserData(id,divId){
 			$.getJSON('../APIs/getUserDetails.php?id='+id,function(userDataInPostPage){
-				name=userDataInPostPage.name;
+				$(divId).append(userDataInPostPage.name);
 			});
-			return name;
 		}
 				
 		function checkLoginStatus(){
@@ -180,15 +182,15 @@
 				
 				$.getJSON('../APIs/getPosts.php?post_id='+id,function(postData){
 					$("#subject").append(postData.posts[0].subject);
-					$("#postedBy").append(getUserData(postData.posts[0].user_id)+"</a></p></div><hr/>");				
+					getUserData(postData.posts[0].user_id,'#postedBy');				
 					$("#postDescription").append(postData.posts[0].description);				
 				});
 				
 				$.getJSON('../APIs/getAnswers.php?post_id='+id,function(answersData){
 					var str="";
 					for(i=0;i<answersData.answers.length;i++){
-						str+="<div><h5>";
-						str+=getUserData(answersData.answers[i].user_id)+"'s answer:</h5>";
+						str+="<div><h5 id='"+i+"'></h5>";
+						getUserData(answersData.answers[i].user_id,'#'+i);
 						str+=answersData.answers[i].description+"</div><br/><hr/>";
 					}
 					$("#answersDiv").append(str);
@@ -215,6 +217,14 @@
 					}
 				});
 				$("#answerTextarea").val("");
+				return false;
+			});
+			
+			$("#logout").click(function(){
+				$.get("../APIs/deleteSessions.php",function(data){
+					if(data=="success")
+						window.location.href = "../index.php";
+				});
 				return false;
 			});
 		});

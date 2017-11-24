@@ -50,6 +50,9 @@
             <li class="nav-item">
               <a class="nav-link" href="login.php">Login/Sign up</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -91,8 +94,8 @@
 			</div>
 		  </div>
 		  <div class="col-sm-3" style="margin-left=10%">
-			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
-				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Nithya A</a>
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="nithya-arumugam-ba9b16b1">
+				<a class="LI-simple-link" href='https://www.linkedin.com/in/nithya-arumugam-ba9b16b1?trk=profile-badge'>Nithya A</a>
 			</div>
 		  </div>
 		  <div class="col-sm-3" style="margin-left=10%">
@@ -149,6 +152,15 @@
     <!-- Custom scripts for this template -->
     <script src="../js/clean-blog.min.js"></script>
 
+	<script>
+		$("#logout").click(function(){
+			$.get("../APIs/deleteSessions.php",function(data){
+				if(data=="success")
+					window.location.href = "../index.php";
+			});
+			return false;
+		});
+	</script>
   </body>
 
 </html>

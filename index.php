@@ -47,6 +47,9 @@
             <li class="nav-item">
               <a class="nav-link" href="HTML/login.php">Login/Sign up</a>
             </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="logout">Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -130,18 +133,17 @@
     <script src="js/clean-blog.min.js"></script>
 
 	<script>
-		function getUserData(id){
+		function getUserData(id,tagId){
 			$.getJSON('APIs/getUserDetails.php?id='+id,function(userData){
-				name=userData.name+"</a></p></div><hr/>";
+				$(tagId).append(userData.name);
 			});
-			return name;
 		}
 		$.getJSON('APIs/getPosts.php',function(data){
 			var str="";
 			for(i=0;i<data.posts.length;i++){
 				str+="<div class='post-preview'><a href='HTML/post.php' id='"+data.posts[i].id+"' class='postLinkClass'><h2 class='post-title'>";
-				str+=data.posts[i].subject+"</h2></a><p class='post-meta'>Posted by <a href='#'>";
-				str+=getUserData(data.posts[i].user_id);
+				str+=data.posts[i].subject+"</h2></a><p class='post-meta'>Posted by <a href='#' id='postedById_"+data.posts[i].id+"'></a></p></div><hr/>";
+				getUserData(data.posts[i].user_id,"#postedById_"+data.posts[i].id);
 			}
 			$("#main_content").append(str);
 		});
@@ -149,8 +151,17 @@
 			$('a.postLinkClass').click(function(){
 				var id=$(this).attr("id");
 				$.getJSON('APIs/setPostSession.php?id='+id,function(data){
-					//Nothing
+					window.location.href = "HTML/post.php";
 				});
+				return false;
+			});
+			
+			$("#logout").click(function(){
+				$.get("APIs/deleteSessions.php",function(data){
+					if(data=="success")
+						window.location.href = "index.php";
+				});
+				return false;
 			});
 		});
 	</script>
