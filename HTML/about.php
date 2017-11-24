@@ -48,7 +48,10 @@
               <a class="nav-link" href="createPost.php">Have an issue?</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="login.php">Login/Sign up</a>
+              <a class="nav-link" href="login.php" id="loginNavBar">Login/Sign up</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="loggedIn">Logged in as </a>
             </li>
 			<li class="nav-item">
               <a class="nav-link" href="#" id="logout">Logout</a>
@@ -108,43 +111,6 @@
 
     <hr>
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-            </ul>
-            <p class="copyright text-muted">Copyright &copy; Your Website 2017</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-
     <!-- Bootstrap core JavaScript -->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -153,6 +119,30 @@
     <script src="../js/clean-blog.min.js"></script>
 
 	<script>
+		var user;
+		
+		function getUserData(id,divId){
+			$.getJSON('../APIs/getUserDetails.php?id='+id,function(userDataInPostPage){
+				$(divId).append(userDataInPostPage.name);
+			});
+		}
+		function checkLoginStatus(){
+			$.getJSON('../APIs/getSession.php',function(userData){
+				if(userData.user!='null'){
+					$("#loginNavBar").hide();
+					user=userData.user;
+					getUserData(user,"#loggedIn");
+				}
+				else{
+					$("#loggedIn").hide();
+					$("#logout").hide();
+					user=null;
+				}
+			});
+		}
+		
+		checkLoginStatus();
+		
 		$("#logout").click(function(){
 			$.get("../APIs/deleteSessions.php",function(data){
 				if(data=="success")

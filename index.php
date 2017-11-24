@@ -45,7 +45,10 @@
               <a class="nav-link" href="HTML/createPost.php">Have an issue?</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="HTML/login.php">Login/Sign up</a>
+              <a class="nav-link" href="HTML/login.php" id="loginNavBar">Login/Sign up</a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link" href="#" id="loggedIn">Logged in as </a>
             </li>
 			<li class="nav-item">
               <a class="nav-link" href="#" id="logout">Logout</a>
@@ -74,12 +77,7 @@
     <div class="container">
       <div class="row">
 	    <div class="input-group">
-		  <input type="text" class="form-control" placeholder="Search Blog..">
-		  <span class="input-group-btn">
-		  <button class="btn btn-default" type="button">
-			<span class="glyphicon glyphicon-search"></span>
-		  </button>
-		  </span>
+		  <input type="text" class="form-control"  onkeyup="searchFunction()" placeholder="Search Blog.." id="searchBar" />
 		</div>
         <div class="col-lg-8 col-md-10 mx-auto" id="main_content">
           
@@ -89,42 +87,6 @@
 
     <hr>
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <ul class="list-inline text-center">
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
-
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -133,6 +95,39 @@
     <script src="js/clean-blog.min.js"></script>
 
 	<script>
+		var user;
+		
+		function searchFunction() {
+			var input, filter, ul, li, a, i;
+			input = document.getElementById("searchBar");
+			filter = input.value.toUpperCase();
+			var divList = document.getElementsByClassName("post-preview");
+			for (i = 0; i < divList.length; i++) {
+				a = divList[i].getElementsByClassName("post-title")[0];
+				if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					divList[i].style.display = "";
+				} else {
+					divList[i].style.display = "none";
+				}
+			}
+		}
+		
+		
+		function checkLoginStatus(){
+			$.getJSON('APIs/getSession.php',function(userData){
+				if(userData.user!='null'){
+					$("#loginNavBar").hide();
+					user=userData.user;
+					getUserData(user,"#loggedIn");
+				}
+				else{
+					$("#logout").hide();
+					$("#loggedIn").hide();
+					user=null;
+				}
+			});
+		}
+		
 		function getUserData(id,tagId){
 			$.getJSON('APIs/getUserDetails.php?id='+id,function(userData){
 				$(tagId).append(userData.name);
@@ -148,6 +143,9 @@
 			$("#main_content").append(str);
 		});
 		$(document).ready(function(){
+			
+			checkLoginStatus();
+			
 			$('a.postLinkClass').click(function(){
 				var id=$(this).attr("id");
 				$.getJSON('APIs/setPostSession.php?id='+id,function(data){
@@ -163,6 +161,9 @@
 				});
 				return false;
 			});
+			
+			
+			
 		});
 	</script>
   </body>
