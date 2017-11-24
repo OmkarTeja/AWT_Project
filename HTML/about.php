@@ -89,8 +89,8 @@
 			</div>
 		  </div>
 		  <div class="col-sm-3" style="margin-left=10%">
-			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
-				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Sparsha B M</a>
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="sparsha-b-m-5a3650121">
+				<a class="LI-simple-link" href='https://www.linkedin.com/in/sparsha-b-m-5a3650121?trk=profile-badge'>Sparsha B M</a>
 			</div>
 		  </div>
 		  <div class="col-sm-3" style="margin-left=10%">
@@ -99,8 +99,8 @@
 			</div>
 		  </div>
 		  <div class="col-sm-3" style="margin-left=10%">
-			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="omkar-teja">
-				<a class="LI-simple-link" href='https://in.linkedin.com/in/omkar-teja?trk=profile-badge'>Sudipto Sinha</a>
+			<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="dark" data-vanity="sudipto-singha-61b46a154">
+				<a class="LI-simple-link" href='https://in.linkedin.com/in/sudipto-singha-61b46a154?trk=profile-badge'>Sudipto Sinha</a>
 			</div>
 		  </div>
 		</div>
